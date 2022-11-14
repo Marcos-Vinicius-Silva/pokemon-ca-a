@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "angular": "^1.8.2",
+    "sass": "^1.56.1"
+  }
+}

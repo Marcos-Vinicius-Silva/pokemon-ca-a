@@ -1,0 +1,14 @@
+* {
+    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'Roboto', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    -webkit-font-smoothing: none !important;
+  }
+  body, html, #root {
+    height: 100%;
+    width: 100%;
+  }

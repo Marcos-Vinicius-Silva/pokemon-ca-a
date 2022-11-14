@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="project_advise">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts Imports -->
+    <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');</style>
+
+    <!-- Angular JS imports -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="index.controller.js"></script>
+    
+    <!-- CSS imports -->
+    <link rel="stylesheet" href="./src/styles/reset.css">
+    <link rel="stylesheet" href="./src/styles/style.css">
+    
+    <title>Advise</title>
+</head>
+<body ng-controller="IndexController" ng-class="theme == 'dark_mode' && 'dark-mode'">
+    <header>
+        <div>
+            <div>
+                <img src="./src/assets/imgs/LOGO.svg" alt="">
+            </div>
+    
+            <div class="wellcome-user">
+                <h3>Olá, Marcos Vinicius</h3>
+                
+                <div class="switch" ng-class="status == true ? 'switch-active' : 'switch-inative'">
+                    <i class="active"
+                        ng-if="status == true" 
+                        ng-click="ChangeStatus();">
+                    </i>
+                    <i class="inative"
+                        ng-if="status == false"
+                        ng-click="ChangeStatus();">
+                    </i>
+                </div>
+                
+            </div>
+        </div>   
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="title-and-search">
+                <div class="">
+                <h1>Fase teste prático Front_end</h1>
+                    <h3>pokebusca</h3>
+                </div>
+
+                <div class="search">
+                    <input type="text" placeholder="Buscar" ng-model='pokemonKey' ng-change="GetPokemonId(pokemonKey)"/>
+                    <img src="./src/assets/imgs/icons8-search.svg" alt="search">
+                </div>
+                
+            </div>
+
+            <div class="grayLine"></div>
+            <div class="viws-pokemon" ng-if="viewPokemons.length > 1">
+                <p>Exibindo {{pageSize}} de {{listPokemons.length}}</p>
+            </div>
+
+            <div class="viws-pokemon" ng-if="viewPokemons.length == 1">
+                <p>Exibindo {{viewPokemons.length}} de {{viewPokemons.length}}</p>
+            </div>
+
+            <div class="grayLine"></div>
+
+            <div class="list-pokemons" ng-repeat="pokemon in viewPokemons">
+                <div class="container-pokemon">
+                    <div class="img">
+                        <img src="./src/assets/imgs/pokemons/{{pokemon.id}}.png" alt="{{pokemon.name}}" ng-click="OpenModal(pokemon.id)">
+                    </div>
+    
+                    <div>
+                        <h1>{{pokemon.name[0].toUpperCase() + pokemon.name.substring(1)}} #{{pokemon.id}}</h1>
+                        <p> Características do pokemon dolor sit amet, consectetur adipiscing elit. In ultricies nunc at odio tempor tincidunt.
+                            Sed sit amet dolor velit. Donec convallis tellus ut porta molestie. Suspendisse condimentum et dui in aliquam.
+                        </p>
+                    </div>
+                </div>
+                <div class="grayLine"></div>
+            </div>
+
+            <div class="controll-pagination" ng-if="viewPokemons.length > 1">
+                <div>
+                    <p>{{currentPage}} de {{listPokemons.length / pageSize }} páginas</p>
+                    <div>
+                        <button ng-click="SetCurrentPage('', 1)" ng-disabled="currentPage == 1" ng-class="currentPage == 1 && 'disabled'"><img src="./src/assets/imgs/btn-primary-all-left-icon.svg" alt="go back all"></button>
+                        <button ng-click="SetCurrentPage('goBack')" ng-class="currentPage == 1 && 'disabled'"><img src="./src/assets/imgs/btn-primary-left-icon.svg" alt="go back"></button>
+                        <button ng-click="SetCurrentPage('next')" ng-class="currentPage >= (listPokemons.length / pageSize) && 'disabled'"><img src="./src/assets/imgs/btn-primary-right-icon.svg" alt="next"></button>
+                        <button ng-click="SetCurrentPage('', listPokemons.length / pageSize)" ng-class="currentPage >= (listPokemons.length / pageSize) && 'disabled'"><img src="./src/assets/imgs/btn-primary-all-right-icon.svg" alt="next all"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <div class="modal" style="display: none;">
+
+        <div>
+            <div class="header-modal">
+                <h1>{{pokemonModal.name}}</h1>
+                <img src="./src/assets/imgs/close.svg" alt="close modal" ng-click="CloseModal()">
+            </div>
+            <div class="grayLine"></div>
+            <div class="main-modal">
+                <div>
+                    <div ng-if="pokemonModal.sprites.back_default">
+                        <h3>back_default</h3>
+                        <img src="{{pokemonModal.sprites.back_default}}" alt="">
+                    </div>
+
+                    <div ng-if="pokemonModal.sprites.back_female">
+                        <h3>back_female</h3>
+                        <img src="{{pokemonModal.sprites.back_female}}" alt="">
+                    </div>
+
+                    <div ng-if="pokemonModal.sprites.back_shiny">
+                        <h3>back_shiny</h3>
+                        <img src="{{pokemonModal.sprites.back_shiny}}" alt="">
+                    </div>
+
+                    <div ng-if="pokemonModal.sprites.back_shiny_female">
+                        <h3>back_shiny_female</h3>
+                        <img src="{{pokemonModal.sprites.back_shiny_female}}" alt="">
+                    </div>
+
+                    <div ng-if="pokemonModal.sprites.front_default">
+                        <h3>front_default</h3>
+                        <img src="{{pokemonModal.sprites.front_default}}" alt="">
+                    </div>
+
+                    <div ng-if="pokemonModal.sprites.front_female">
+                        <h3>front_female</h3>
+                        <img src="{{pokemonModal.sprites.front_female}}" alt="">
+                    </div>
+
+                    <div ng-if="pokemonModal.sprites.front_shiny">
+                        <h3>front_shiny</h3>
+                        <img src="{{pokemonModal.sprites.front_shiny}}" alt="">
+                    </div>
+
+                    <div ng-if="pokemonModal.sprites.front_shiny_female">
+                        <h3>front_shiny_female</h3>
+                        <img src="{{pokemonModal.sprites.front_shiny_female}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
