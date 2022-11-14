@@ -41,23 +41,18 @@
                     i.id = index + 1;
                 })
                 SetPagination();
-                console.log($scope.listPokemons)
             }, function errorCallback(err) {
                 console.error(err);
             }) 
-            console.log($scope.listPokemons)
         }
 
         function GetPokemonId (id) {
             id ? $http.get(urls.GET_POKEMON + id).then(function successCallback(response) {
                 $scope.viewPokemons = []
                 $scope.viewPokemons.push(response.data)
-                console.log($scope.viewPokemons)
-                console.log(response.data)
             }, function errorCallback(err) {
                 console.error(err);
             }) : GetPokemons();
-            console.log($scope.listPokemons)
         }
 
         // Set Theme
@@ -109,10 +104,9 @@
         // open modal
         function OpenModal (id) {
             $http.get(urls.GET_POKEMON + id).then(function successCallback(response) {
-                
-                document.getElementsByClassName('modal')[0].style.display = 'flex'
                 $scope.pokemonModal = response.data;
-                console.log($scope.pokemonModal)
+
+                document.getElementsByClassName('modal')[0].style.display = 'flex'
             }, function errorCallback(err) {
                 console.error(err);
             })
